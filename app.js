@@ -11,8 +11,6 @@ mongoose.connect("mongodb://localhost/coffilicous",{
 	useNewUrlParser: true, 
 	useUnifiedTopology: true 
 })
-// mongo "mongodb+srv://cluster0-qdusk.mongodb.net/<dbname>" --username kamalvk18
-
 app.use(express.static(__dirname+"/public"));
 
 app.set("view engine","ejs");
@@ -101,6 +99,11 @@ app.post("/menu/:id/review",function(req,res){
 app.get("/about",function(req,res){
 	res.render("about");
 })
+.catch((error) => {
+  assert.isNotOk(error,'Promise error');
+  done();
+});
+
 
 app.listen(process.env.PORT||3000,function(){
 	console.log("Server Started...");
