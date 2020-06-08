@@ -1,0 +1,36 @@
+body{
+    background-color: #ffe7a3;
+     /* font-family: Nunito;  */
+    font-weight: 100;
+    font-size: 1.5rem;
+}
+#mainNavbar .navbar-brand{
+    color: #ffe7a3;
+    font-size: 1.5rem;
+    font-weight: 500;
+	padding-left: 7%;
+}
+#mainNavbar .navbar-brand:hover{
+	color:white;
+}
+.content{
+    text-align: center;
+}
+#mainNavbar .nav-item .nav-link{
+    font-weight: 300;
+    color: #ffe7a3;
+}
+#mainNavbar .nav-link:hover {
+    color: white;
+}
+section{
+    margin-bottom: 50px;
+}
+form{
+	width:30%;
+	margin : 30px auto;
+}
+#comment{
+	font-family: 'Roboto Slab', serif;
+	font-size : 20px;
+}

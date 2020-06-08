@@ -1,0 +1,34 @@
+<%- include("../partials/header") %>
+
+<div class="container">
+	<div class="card mb-3">
+	<img src="<%= coffee.image %>" >	
+		<div class="card-body">
+			<p class="float-left" style="font-weight:700"><%= coffee.name %></p>	
+			<p class="float-right"><strong>$<%= coffee.price %></strong></p>
+			<p>
+				<strong><%= coffee.desc %></strong>
+			</p>
+		</div>
+	</div>
+		<div class="card">
+			<div class="card-body">
+				<p class="float-right">
+					<a href="/menu/<%= coffee._id%>/review/new" class="btn btn-success">Leave Review</a>
+				</p>
+				<br>
+				<hr>
+				<% coffee.reviews.forEach(function(review){ %>
+				<p id="comment">
+					<span style="font-weight:800;"><%= review.author %> </span>
+				<br>
+					 <%= review.text %>
+				</p>
+				<% }) %>
+			</div>
+
+
+		</div>
+	</div>
+
+<%- include("../partials/footer") %>
