@@ -7,7 +7,11 @@ var Review = require("./models/review")
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/coffilicous",{ useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect("mongodb://localhost/coffilicous",{
+	useNewUrlParser: true, 
+	useUnifiedTopology: true 
+})
+// mongo "mongodb+srv://cluster0-qdusk.mongodb.net/<dbname>" --username kamalvk18
 
 app.use(express.static(__dirname+"/public"));
 
