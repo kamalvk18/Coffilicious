@@ -7,10 +7,12 @@ var Review = require("./models/review")
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 var mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/coffilicous",{
+
+mongoose.connect("mongodb+srv://kamalvk18:kamal@123@cluster0-qdusk.mongodb.net/<dbname>?retryWrites=true&w=majority",{
 	useNewUrlParser: true, 
 	useUnifiedTopology: true 
 })
+
 app.use(express.static(__dirname+"/public"));
 
 app.set("view engine","ejs");
