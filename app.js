@@ -12,11 +12,11 @@ mongoose.connect("mongodb+srv://kamalvk18:kamal@123@cluster0-qdusk.mongodb.net/k
 	useNewUrlParser: true, 
 	useUnifiedTopology: true,
 	useCreateIndex: true
-}).then(() => {
-	console.log('Connected to DB!');
-}).catch(err => {
-	console.log('ERROR:', err.message);
-});
+ })//.then(() => {
+// 	console.log('Connected to DB!');
+// }).catch(err => {
+// 	console.log('ERROR:', err.message);
+// });
 
 app.use(express.static(__dirname+"/public"));
 
