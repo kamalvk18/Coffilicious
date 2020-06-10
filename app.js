@@ -1,6 +1,8 @@
 var express = require("express")
 var app = express();
 
+app.locals.moment = require("moment");
+
 var coffee = require("./models/coffee");
 var Review = require("./models/review")
 
@@ -8,7 +10,7 @@ var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
 var mongoose = require("mongoose");
 
-mongoose.connect("mongodb+srv://kamalvk18:kamal@123@cluster0-qdusk.mongodb.net/kamalvk18?retryWrites=true&w=majority",{
+mongoose.connect(process.env.DATABASEURL,{
 	useNewUrlParser: true, 
 	useUnifiedTopology: true,
 	useCreateIndex: true
@@ -17,7 +19,7 @@ mongoose.connect("mongodb+srv://kamalvk18:kamal@123@cluster0-qdusk.mongodb.net/k
 // }).catch(err => {
 // 	console.log('ERROR:', err.message);
 // });
-
+//mongodb+srv://kamalvk18:kamal@123@cluster0-qdusk.mongodb.net/kamalvk18?retryWrites=true&w=majority
 app.use(express.static(__dirname+"/public"));
 
 app.set("view engine","ejs");
