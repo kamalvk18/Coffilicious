@@ -1,16 +1,22 @@
-var express = require("express")
+var express 	  		  = require("express"),
+    mongoose 	  		  = require("mongoose"),
+	bodyParser    		  = require("body-parser"),
+	passport	  		  = require("passport"),
+	localStrategy 		  = require("passport-local"),
+	passportLocalMongoose = require("passport-local-mongoose")
+
 var app = express();
-
-app.locals.moment = require("moment");
-
 var coffee = require("./models/coffee");
 var Review = require("./models/review")
+var User   = require("./models/user")
 
-var bodyParser = require("body-parser");
-app.use(bodyParser.urlencoded({extended: true}));
-var mongoose = require("mongoose");
+var menuRoutes    = require("./routes/menu"),
+	reviewRoutes  = require("./routes/reviews"),
+	indexRoutes   = require("./routes/index")
 
-mongoose.connect(process.env.DATABASEURL,{
+var url = process.env.DATABASEURL||"mongodb://localhost/coffilicous"
+
+mongoose.connect(url,{
 	useNewUrlParser: true, 
 	useUnifiedTopology: true,
 	useCreateIndex: true
@@ -20,95 +26,38 @@ mongoose.connect(process.env.DATABASEURL,{
 // 	console.log('ERROR:', err.message);
 // });
 //mongodb+srv://kamalvk18:kamal@123@cluster0-qdusk.mongodb.net/kamalvk18?retryWrites=true&w=majority
-app.use(express.static(__dirname+"/public"));
+	
 
+ 
+app.locals.moment = require("moment");
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static(__dirname+"/public"));
 app.set("view engine","ejs");
 
-app.get("/",function(req,res){
-	res.render("home");
-})
+app.use(require("express-session")({
+	secret :"Mustang is one of my dream car",
+	resave :false,
+	saveUninitialized :false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.get("/menu",function(req,res){
-	coffee.find({},function(err,coffees){
-		if(err){
-			console.log("cannot load");
-		}
-		else{
-			res.render("coffee/menu",{coffee : coffees});	
-		}
-	})	
-})
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-app.post("/menu",function(req,res){
-	var name = req.body.name;
-	var image = req.body.image;
-	var price = req.body.price;
-	var desc = req.body.desc;
-	var newCoffee = {name: name,image: image,price: price, desc: desc};
-	coffee.create(newCoffee,function(err,newCoffee){
-		if(err){
-			console.log("Sorry cannot be added")
-		}
-		else{
-			res.redirect("/menu")
-		}
-	})
-})
-app.get("/menu/new",function(req,res){
-	res.render("coffee/new")
-})
-
-app.get("/menu/:id",function(req,res){
-	coffee.findById(req.params.id).populate("reviews").exec(function(err,foundCoffee){
-		if(err){
-			console.log(err);
-		}
-		else{
-			res.render("coffee/show", {coffee: foundCoffee});
-		}
-	})
-})
-
-// ================================
-// REVIEW ROUTES
-// ================================
-
-app.get("/menu/:id/review/new",function(req,res){
-	coffee.findById(req.params.id,function(err,foundCoffee){
-		if(err){
-			console.log(err);
-		}
-		else{
-			res.render("reviews/new", {coffee: foundCoffee});
-		}
-	})
-})
-
-app.post("/menu/:id/review",function(req,res){
-	coffee.findById(req.params.id,function(err,coffee){
-		if(err){
-			console.log(err);
-			res.redirect("/menu")
-		}
-		else{
-			Review.create(req.body.review, function(err,review){
-				if(err){
-					console.log(err)
-				}
-				else{
-					coffee.reviews.push(review);
-					coffee.save();
-					res.redirect("/menu/"+ coffee._id)
-				}
-			});
-		}
-	});
+app.use(function(req,res,next){
+	res.locals.currentUser = req.user;
+	next();
 });
 
-app.get("/about",function(req,res){
-	res.render("about");
-})
+app.use("/",indexRoutes)
+app.use("/menu/:id/review",reviewRoutes)
+app.use("/menu",menuRoutes)
 
+app.use(function(err, req, res, next) {
+    console.log(err);
+});
 
 app.listen(process.env.PORT||3000,function(){
 	console.log("Server Started...");

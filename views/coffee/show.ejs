@@ -20,7 +20,7 @@
 				<hr>
 				<% coffee.reviews.forEach(function(review){ %>
 				<p id="comment">
-					<span style="font-weight:800;"><%= review.author %> </span><span class="float-right"><%= moment(review.createdAt).fromNow() %></span>
+					<span style="font-weight:800;"><%=review.author.username%></span><span class="float-right"><%= moment(review.createdAt).fromNow() %></span>
 				<br>
 					 <%= review.text %>
 				</p>
