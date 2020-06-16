@@ -1,10 +1,11 @@
 var express 	  		  = require("express"),
     mongoose 	  		  = require("mongoose"),
+    flash				  = require("connect-flash"),
 	bodyParser    		  = require("body-parser"),
 	passport	  		  = require("passport"),
 	localStrategy 		  = require("passport-local"),
 	passportLocalMongoose = require("passport-local-mongoose")
-
+	
 var app = express();
 var coffee = require("./models/coffee");
 var Review = require("./models/review")
@@ -27,8 +28,6 @@ mongoose.connect(url,{
 // });
 //mongodb+srv://kamalvk18:kamal@123@cluster0-qdusk.mongodb.net/kamalvk18?retryWrites=true&w=majority
 	
-
- 
 app.locals.moment = require("moment");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname+"/public"));
@@ -39,6 +38,7 @@ app.use(require("express-session")({
 	resave :false,
 	saveUninitialized :false
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
