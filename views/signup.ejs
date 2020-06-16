@@ -1,9 +1,10 @@
 <%- include("./partials/header") %>
-<div class="row justify-content-center" style="margin-top:80px;">
+<div class="container-fluid">
+	<div class="row justify-content-center" style="margin-top:80px;">
 <h1 class="col-md-12 text-center">
 	SignUp 
 </h1>
-	<div class="col-xs-12 col-md-9 col-lg-7">
+	<div class="col-sm-5 col-md-5 col-lg-3">
 		<form action="/signup" method="POST">
 			<div class="form-group">
 				<input class="form-control" type="text" name="username" placeholder="username">
@@ -19,4 +20,6 @@
 		</form>
 	</div>
 </div>
+</div>
+
 <%- include("./partials/footer") %>

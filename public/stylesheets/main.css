@@ -1,14 +1,14 @@
 body{
-    background-color: #ffe7a3;
+    background-color: 000;
      /* font-family: Nunito;  */
     font-weight: 100;
     font-size: 1.5rem;
 }
 #mainNavbar .navbar-brand{
-    color: #ffe7a3;
+    color: #fff;
     font-size: 1.5rem;
     font-weight: 500;
-	padding-left: 7%;
+	text-shadow: 2px 2px 10px black;
 }
 #mainNavbar .navbar-brand:hover{
 	color:white;
@@ -18,7 +18,8 @@ body{
 }
 #mainNavbar .nav-item .nav-link{
     font-weight: 300;
-    color: #ffe7a3;
+    color: #d4d1cb;
+	text-shadow: 2px 2px 10px black;
 }
 
 #mainNavbar .nav-link:hover {
@@ -26,6 +27,7 @@ body{
 }
 section{
     margin-bottom: 50px;
+	text-shadow: 0.3px 0.3px 1px black;
 }
 form{
 	width:30%;
@@ -34,4 +36,13 @@ form{
 #comment{
 	font-family: 'Roboto Slab', serif;
 	font-size : 20px;
+}
+form {
+   -webkit-appearance: none; -moz-appearance: none; 
+  /* display: block; */
+  width: 95%; 
+  /* height: 40px; */
+  /* line-height: 40px;*/
+  font-size: 17px;
+  
 }
