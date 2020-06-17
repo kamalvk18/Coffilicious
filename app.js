@@ -39,6 +39,7 @@ app.use(require("express-session")({
 	saveUninitialized :false
 }));
 
+app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -48,6 +49,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req,res,next){
 	res.locals.currentUser = req.user;
+	res.locals.error= req.flash("error");
+	res.locals.success=req.flash("success");
 	next();
 });
 

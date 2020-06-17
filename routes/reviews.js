@@ -2,8 +2,9 @@ var express = require("express");
 var router  = express.Router({mergeParams: true});
 var Review = require("../models/review");
 var coffee = require("../models/coffee")
+var middleware = require("../middleware");
 
-router.get("/new",isLoggedIn,function(req,res){
+router.get("/new",middlewareObj.isLoggedIn,function(req,res){
 	coffee.findById(req.params.id,function(err,foundCoffee){
 		if(err){
 			console.log(err);
@@ -14,7 +15,7 @@ router.get("/new",isLoggedIn,function(req,res){
 	})
 })
 
-router.post("/",isLoggedIn,function(req,res){
+router.post("/",middlewareObj.isLoggedIn,function(req,res){
 	coffee.findById(req.params.id,function(err,coffee){
 		if(err){
 			console.log(err);
@@ -37,12 +38,5 @@ router.post("/",isLoggedIn,function(req,res){
 		}
 	});
 });
-
-function isLoggedIn(req,res,next){
-	if(req.isAuthenticated()){
-	   return next()
-	   }
-	res.redirect("/login")
-}
 
 module.exports = router;
