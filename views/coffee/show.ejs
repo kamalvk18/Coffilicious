@@ -19,11 +19,22 @@
 				<br>
 				<hr>
 				<% coffee.reviews.forEach(function(review){ %>
-				<p id="comment">
+				<hr>
+				<div id="comment">
 					<span style="font-weight:800;"><%=review.author.username%></span><span class="float-right"><%= moment(review.createdAt).fromNow() %></span>
 				<br>
-					 <%= review.text %>
-				</p>
+					 <%= review.text %> 
+					<%if(currentUser && review.author.id.equals(currentUser._id)){%>
+					<div class="float-right">
+						<a href="/menu/<%=coffee._id%>/review/<%=review._id%>/edit" class="btn btn-sm btn-warning">
+						 Edit
+						</a>
+						<form action="/menu/<%=coffee._id%>/review/<%=review._id%>?_method=DELETE" method="POST" class="delete-form">
+						<input type="submit" class="btn btn-sm btn-danger"value="Delete">
+						</form>
+					</div>
+					<%}%>
+				</div>
 				<% }) %>
 			</div>
 

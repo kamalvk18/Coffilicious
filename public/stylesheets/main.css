@@ -46,3 +46,6 @@ form {
   font-size: 17px;
   
 }
+.delete-form{
+	display:inline;
+}

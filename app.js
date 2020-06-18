@@ -3,6 +3,7 @@ var express 	  		  = require("express"),
     flash				  = require("connect-flash"),
 	bodyParser    		  = require("body-parser"),
 	passport	  		  = require("passport"),
+	methodOverride   	  = require("method-override"),
 	localStrategy 		  = require("passport-local"),
 	passportLocalMongoose = require("passport-local-mongoose")
 	
@@ -20,7 +21,8 @@ var url = process.env.DATABASEURL||"mongodb://localhost/coffilicous"
 mongoose.connect(url,{
 	useNewUrlParser: true, 
 	useUnifiedTopology: true,
-	useCreateIndex: true
+	useCreateIndex: true,
+	 useFindAndModify: false
  })//.then(() => {
 // 	console.log('Connected to DB!');
 // }).catch(err => {
@@ -32,7 +34,9 @@ app.locals.moment = require("moment");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static(__dirname+"/public"));
 app.set("view engine","ejs");
+app.use(methodOverride("_method"));
 
+//PASSPORT CONFIGURATION
 app.use(require("express-session")({
 	secret :"Mustang is one of my dream car",
 	resave :false,
