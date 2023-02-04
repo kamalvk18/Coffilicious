@@ -2,11 +2,11 @@
 
 This is a Dummy Coffee shop website where users can Login/SignUp and order Coffee of their choice and also leave a review about it.
 This project uses 
--> HTML, CSS(Bootstrap Framework) and JS in the Frontend 
--> NodeJs in the Backend to execute JS code on the server
--> Express Framework to send and accept various GET, POST, UPDATE, DELETE etc.. to preform CRUD operations
--> MongoDB Database is used to store the data
--> Apart from these various npm packages are used (Eg: Passport for Authentication)
+1. HTML, CSS(Bootstrap Framework) and JS in the Frontend 
+2. NodeJs in the Backend to execute JS code on the server
+3. Express Framework to send and accept various GET, POST, UPDATE, DELETE etc.. to preform CRUD operations
+4. MongoDB Database is used to store the data
+5. Apart from these various npm packages are used (Eg: Passport for Authentication)
 
 NOTE - *** Run node seeds.js in cmd before app.js so that you can see some coffees in the Home Page ***
 
