@@ -29,9 +29,18 @@ router.post("/",function(req,res){
 		}
 	})
 })
+
+router.put("/:id",async function(req,res){
+	const {id} = req.params
+	const editCoffee = await coffee.findByIdAndUpdate(id,req.body)
+	console.log(editCoffee.name)
+	res.redirect("/menu")
+})
+
 router.get("/new",function(req,res){
 	res.render("coffee/new")
 })
+
 
 router.get("/:id",middlewareObj.isLoggedIn,function(req,res){
 	coffee.findById(req.params.id).populate("reviews").exec(function(err,foundCoffee){
@@ -42,6 +51,12 @@ router.get("/:id",middlewareObj.isLoggedIn,function(req,res){
 			res.render("coffee/show", {coffee: foundCoffee});
 		}
 	})
+})
+
+router.get('/:id/edit',async function(req,res){
+	const {id} = req.params
+	const foundCoffee = await coffee.findById(id)
+	res.render("coffee/edit",{coffee:foundCoffee})
 })
 
 module.exports = router;

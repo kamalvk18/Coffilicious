@@ -16,18 +16,18 @@ var menuRoutes    = require("./routes/menu"),
 	reviewRoutes  = require("./routes/reviews"),
 	indexRoutes   = require("./routes/index")
 
-var url = process.env.DATABASEURL||"mongodb://localhost/coffilicous"
+var url = process.env.DATABASEURL||"mongodb://localhost/coffilicious"
 
 mongoose.connect(url,{
 	useNewUrlParser: true, 
 	useUnifiedTopology: true,
 	useCreateIndex: true,
 	 useFindAndModify: false
- })//.then(() => {
-// 	console.log('Connected to DB!');
-// }).catch(err => {
-// 	console.log('ERROR:', err.message);
-// });
+ }).then(() => {
+	console.log('Connected to DB!',url);
+}).catch(err => {
+	console.log('ERROR:', err.message);
+});
 //mongodb+srv://kamalvk18:kamal@123@cluster0-qdusk.mongodb.net/kamalvk18?retryWrites=true&w=majority
 	
 app.locals.moment = require("moment");

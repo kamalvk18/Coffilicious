@@ -2,7 +2,7 @@ var mongoose = require("mongoose")
 
 var coffee = require("./models/coffee");
 
-var url = process.env.DATABASEURL||"mongodb://localhost/coffilicous"
+var url = process.env.DATABASEURL||"mongodb://localhost/coffilicious"
 
 mongoose.connect(url,{
 	useNewUrlParser: true, 
