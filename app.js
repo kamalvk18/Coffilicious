@@ -16,6 +16,8 @@ var menuRoutes    = require("./routes/menu"),
 	reviewRoutes  = require("./routes/reviews"),
 	indexRoutes   = require("./routes/index")
 
+const ExpressError = require("./utils/ExpressError")
+
 var url = process.env.DATABASEURL||"mongodb://localhost/coffilicious"
 
 mongoose.connect(url,{
@@ -62,8 +64,19 @@ app.use("/",indexRoutes)
 app.use("/menu/:id/review",reviewRoutes)
 app.use("/menu",menuRoutes)
 
+app.all('*',(req,res,next)=>{
+	next(new ExpressError('Page not Found!!',404))
+})
+
 app.use(function(err, req, res, next) {
-    console.log(err);
+	if(!err.message){
+		err.message = "Something went wrong!"
+	}
+	if(!err.statusCode){
+		err.statusCode = 500
+	}
+	const {statusCode, message} = err
+	res.status(statusCode).render('error',{err})
 });
 
 app.listen(process.env.PORT||3000,function(){

@@ -3,6 +3,8 @@ var router  = express.Router({mergeParams: true});
 var coffee = require("../models/coffee");
 var middleware = require("../middleware");
 
+const catchAsync = require("../utils/catchAsync")
+
 router.get("/",function(req,res){
 	coffee.find({},function(err,coffees){
 		if(err){
@@ -14,44 +16,34 @@ router.get("/",function(req,res){
 	})	
 })
 
-router.post("/",function(req,res){
-	var name = req.body.name;
-	var image = req.body.image;
-	var price = req.body.price;
-	var desc = req.body.desc;
-	var newCoffee = {name: name,image: image,price: price, desc: desc};
-	coffee.create(newCoffee,function(err,newCoffee){
-		if(err){
-			console.log("Sorry cannot be added")
-		}
-		else{
-			res.redirect("/menu")
-		}
-	})
-})
+router.post("/", catchAsync(async function(req,res){
+	await coffee.create(req.body)
+	res.redirect("/menu")
+}))
 
-router.put("/:id",async function(req,res){
+router.put("/:id",catchAsync(async function(req,res){
 	const {id} = req.params
 	const editCoffee = await coffee.findByIdAndUpdate(id,req.body)
-	console.log(editCoffee.name)
+	console.log(editCoffee)
 	res.redirect("/menu")
-})
+}))
+
+router.delete("/:id",catchAsync(async function(req,res){
+	const {id} = req.params
+	const deleteCoffee = await coffee.findByIdAndDelete(id)
+	res.redirect("/menu")
+}))
 
 router.get("/new",function(req,res){
 	res.render("coffee/new")
 })
 
 
-router.get("/:id",middlewareObj.isLoggedIn,function(req,res){
-	coffee.findById(req.params.id).populate("reviews").exec(function(err,foundCoffee){
-		if(err){
-			cosnsole.log(err);
-		}
-		else{
-			res.render("coffee/show", {coffee: foundCoffee});
-		}
-	})
-})
+router.get("/:id", middlewareObj.isLoggedIn, catchAsync(async function(req,res){
+	const foundCoffee = await coffee.findById(req.params.id)
+	foundCoffee.populate("reviews")
+	res.render("coffee/show", {coffee: foundCoffee});
+}))
 
 router.get('/:id/edit',async function(req,res){
 	const {id} = req.params

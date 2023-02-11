@@ -46,6 +46,15 @@ const seedDB = async () => {
     })
     
     c3.save()
+
+    const c4 = new coffee({
+        name:"Latte",
+        image: "https://images.unsplash.com/photo-1571658734974-e513dfb8b86b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGxhdHRlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=2000&q=60",
+        price: 21,
+        desc:"Amazing Latte",
+    })
+    
+    c4.save()
 }
 
 seedDB();
