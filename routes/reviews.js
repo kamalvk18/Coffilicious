@@ -4,6 +4,8 @@ var Review = require("../models/review");
 var coffee = require("../models/coffee")
 var middleware = require("../middleware");
 
+const catchAsync = require("../utils/catchAsync")
+
 router.get("/new",middlewareObj.isLoggedIn,function(req,res){
 	coffee.findById(req.params.id,function(err,foundCoffee){
 		if(err){
@@ -15,29 +17,17 @@ router.get("/new",middlewareObj.isLoggedIn,function(req,res){
 	})
 })
 
-router.post("/",middlewareObj.isLoggedIn,function(req,res){
-	coffee.findById(req.params.id,function(err,coffee){
-		if(err){
-			console.log(err);
-			res.redirect("/menu")
-		}
-		else{
-			Review.create(req.body.review, function(err,review){
-				if(err){
-					console.log(err)
-				}
-				else{
-					review.author.id=req.user._id;
-					review.author.username=req.user.username;
-					review.save();
-					coffee.reviews.push(review);
-					coffee.save();
-					res.redirect("/menu/"+ coffee._id)
-				}
-			});
-		}
-	});
-});
+router.post("/",middlewareObj.isLoggedIn,catchAsync(async (req,res)=>{
+	const {id} = req.params
+	const foundCoffee = await coffee.findById(id)
+	const review = new Review(req.body.review)
+	review.author.id = req.user._id
+	review.author.username=req.user.username;
+	await review.save();
+	foundCoffee.reviews.push(review);
+	await foundCoffee.save();
+	res.redirect("/menu/"+ foundCoffee._id)
+}));
 
 router.get("/:reviewId/edit",middlewareObj.reviewOwnership,function(req,res){
 	coffee.findById(req.params.id,function(err,foundCoffee){

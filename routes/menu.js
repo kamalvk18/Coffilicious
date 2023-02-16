@@ -40,8 +40,7 @@ router.get("/new",function(req,res){
 
 
 router.get("/:id", middlewareObj.isLoggedIn, catchAsync(async function(req,res){
-	const foundCoffee = await coffee.findById(req.params.id)
-	foundCoffee.populate("reviews")
+	const foundCoffee = await coffee.findById(req.params.id).populate('reviews')
 	res.render("coffee/show", {coffee: foundCoffee});
 }))
 
