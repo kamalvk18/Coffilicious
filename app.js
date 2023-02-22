@@ -49,7 +49,9 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+//Telling passport to use authenticate method on UserSchema
 passport.use(new localStrategy(User.authenticate()));
+//Serialization means how do we store user in the session
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 

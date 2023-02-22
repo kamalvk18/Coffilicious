@@ -18,6 +18,7 @@ router.get("/",function(req,res){
 
 router.post("/", catchAsync(async function(req,res){
 	await coffee.create(req.body)
+	req.flash('success','Coffee Added!')
 	res.redirect("/menu")
 }))
 
@@ -31,6 +32,7 @@ router.put("/:id",catchAsync(async function(req,res){
 router.delete("/:id",catchAsync(async function(req,res){
 	const {id} = req.params
 	const deleteCoffee = await coffee.findByIdAndDelete(id)
+	req.flash('success','Coffee deleted!')
 	res.redirect("/menu")
 }))
 
