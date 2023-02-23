@@ -12,10 +12,12 @@
 					<p class="card-text">
 						<strong><%= coffee.desc %></strong>
 					</p>
-					<a class="btn btn-warning btn-sm" href="<%=coffee.id%>/edit">Edit</a>
-					<form class="d-inline" action="/menu/<%=coffee.id%>?_method=DELETE" method="POST">
-						<button class="btn btn-danger btn-sm ">Delete</button>
-					</form>	
+					<% if(currentUser && currentUser.username == "kamal"){ %>
+						<a class="btn btn-warning btn-sm" href="<%=coffee.id%>/edit">Edit</a>
+						<form class="d-inline" action="/menu/<%=coffee.id%>?_method=DELETE" method="POST">
+							<button class="btn btn-danger btn-sm ">Delete</button>
+						</form>	
+					<% } %>
 				</div>
 			</div>
 		</div>
