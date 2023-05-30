@@ -46,10 +46,10 @@ router.get("/:id", middlewareObj.isLoggedIn, catchAsync(async function(req,res){
 	res.render("coffee/show", {coffee: foundCoffee});
 }))
 
-router.get('/:id/edit',async function(req,res){
+router.get('/:id/edit', middlewareObj.isLoggedIn, catchAsync(async function(req,res){
 	const {id} = req.params
 	const foundCoffee = await coffee.findById(id)
 	res.render("coffee/edit",{coffee:foundCoffee})
-})
+}))
 
 module.exports = router;

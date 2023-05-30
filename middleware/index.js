@@ -3,12 +3,12 @@ var Review = require("../models/review.js")
 
 middlewareObj.reviewOwnership = function(req,res,next){
 	if(req.isAuthenticated){
-		Review.findById(req.params.reviewId,function(err,foundCoffee){
+		Review.findById(req.params.reviewId,function(err,foundReview){
 			if(err){
 				res.redirect("back")
 			}
 			else{
-				if(foundCoffee.author.id.equals(req.user._id)){
+				if(foundReview.author.id.equals(req.user._id)){
 					next();
 				}
 				else{
